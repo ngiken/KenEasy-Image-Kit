@@ -1,4 +1,4 @@
-﻿# Secrets / credentials ??never commit
+﻿# Secrets / credentials — never commit
 *.pem
 *.p12
 *.key
@@ -47,3 +47,6 @@ build/
 # Optional local notes
 TODO.local.md
 NOTES.local.md
+
+# E2E test artifacts (keep run.mjs + package.json, ignore outputs)
+scratch/e2e/out/

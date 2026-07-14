@@ -2,173 +2,287 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KenEasy Image Kit — 打开就能用的图片压缩/转换工具</title>
-  <meta name="description" content="打开链接即可使用：拖入图片，压缩、改尺寸、转 WebP/JPEG/PNG，打包下载。文件不离开本机，无需安装。">
-  <meta name="theme-color" content="#101114">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>KenEasy Image Kit — 本地批量图片压缩与格式转换</title>
+  <meta name="description" content="拖入图片即可在浏览器本地压缩、改尺寸、转 WebP/JPEG/PNG，并批量下载。无需安装、无需上传、无需注册。">
+  <meta name="theme-color" content="#f5f5f7">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <link rel="stylesheet" href="styles.css?v=0.3.0">
 </head>
 <body>
+  <a class="skip-link" href="#main" data-i18n="skipToMain">跳到主要内容</a>
+  <div class="wallpaper" aria-hidden="true">
+    <span class="glow glow-one"></span>
+    <span class="glow glow-two"></span>
+    <span class="glow glow-three"></span>
+  </div>
+
   <div class="app">
     <header class="header">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">IMG</div>
-        <div>
-          <h1>KenEasy Image Kit</h1>
-          <p class="tagline" data-i18n="tagline">打开就能用 · 拖入 → 压缩/改尺寸/转格式 → 打包下载 · 文件不上传</p>
+      <div class="brand" aria-label="KenEasy Image Kit">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <defs>
+              <linearGradient id="brandGradient" x1="3" y1="3" x2="29" y2="29" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff6b9d"></stop>
+                <stop offset=".52" stop-color="#8b7cff"></stop>
+                <stop offset="1" stop-color="#42bff5"></stop>
+              </linearGradient>
+            </defs>
+            <rect x="1" y="1" width="30" height="30" rx="9" fill="url(#brandGradient)"></rect>
+            <rect x="7" y="8.5" width="18" height="15" rx="4" fill="none" stroke="white" stroke-width="1.7"></rect>
+            <circle cx="20.5" cy="13" r="2" fill="white"></circle>
+            <path d="m9.5 21 4.8-5 3.4 3.2 2.2-2.1 2.7 2.6" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
         </div>
+        <div class="brand-copy">
+          <strong>KenEasy</strong>
+          <span>Image Kit</span>
+        </div>
+        <span class="version-pill">0.3</span>
       </div>
-      <div class="header-actions">
-        <div class="header-top-row">
-          <a
-            class="github-link"
-            href="https://github.com/ngiken/KenEasy-Image-Kit"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n-aria-label="githubAria"
-            aria-label="在 GitHub 打开本项目，欢迎 Star"
-          >
-            <span class="github-ico" aria-hidden="true">★</span>
-            <span data-i18n="githubBtn">GitHub</span>
-          </a>
-          <div class="lang-switch" role="group" aria-label="Language">
-            <button type="button" class="lang-btn" data-lang="zh" id="langZh" aria-pressed="true">中文</button>
-            <button type="button" class="lang-btn" data-lang="en" id="langEn" aria-pressed="false">EN</button>
-          </div>
+
+      <nav class="header-actions" data-i18n-aria-label="utilityAria" aria-label="工具导航">
+        <span class="privacy-indicator">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 8V6.5a3.5 3.5 0 0 1 7 0V8"></path><rect x="4.5" y="8" width="11" height="8" rx="2.5"></rect></svg>
+          <span data-i18n="badgeLocal">本地处理</span>
+        </span>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="zh" id="langZh" aria-pressed="true">中文</button>
+          <button type="button" class="lang-btn" data-lang="en" id="langEn" aria-pressed="false">EN</button>
         </div>
-        <div class="header-badges">
-          <span class="badge" data-i18n="badgeNoInstall">无需安装</span>
-          <span class="badge badge-blue" data-i18n="badgeLocal">本地处理</span>
-        </div>
-      </div>
+        <button type="button" id="themeToggle" class="icon-control theme-toggle" aria-label="切换到深色外观" aria-pressed="false">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"></circle><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.35 4.35l1.4 1.4M14.25 14.25l1.4 1.4M15.65 4.35l-1.4 1.4M5.75 14.25l-1.4 1.4"></path></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.4 12.4A6.8 6.8 0 0 1 7.6 3.6a6.8 6.8 0 1 0 8.8 8.8Z"></path></svg>
+        </button>
+        <a class="github-link" href="https://github.com/ngiken/KenEasy-Image-Kit" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="githubAria" aria-label="在 GitHub 打开本项目，欢迎点 Star">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8a9.4 9.4 0 0 0-3 18.3c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.6 2.4 1.1 2.9.8.1-.7.4-1.1.7-1.3-2.2-.3-4.6-1.1-4.6-4.7 0-1 .4-1.9 1-2.5-.1-.3-.4-1.3.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.2.2 2.2.1 2.5.6.6 1 1.5 1 2.5 0 3.6-2.4 4.4-4.6 4.7.4.3.7.9.7 1.8v2.5c0 .3.2.6.7.5A9.4 9.4 0 0 0 12 2.8Z"></path></svg>
+          <span data-i18n="githubBtn">GitHub</span>
+        </a>
+      </nav>
     </header>
 
-    <main class="main">
-      <section
-        id="dropzone"
-        class="dropzone"
-        tabindex="0"
-        role="button"
-        data-i18n-aria-label="dropzoneAria"
-        aria-label="拖入或点击选择要处理的图片"
-      >
-        <div class="dropzone-inner">
-          <div class="drop-icon" aria-hidden="true">↓</div>
-          <h2 data-i18n="dropTitle">把图片拖到这里</h2>
-          <p data-i18n="dropHint">或点击选择 · 支持多选</p>
-          <p class="formats" data-i18n="dropFormats">
-            支持 PNG / JPG / WEBP / GIF / BMP · 压缩、改尺寸、转格式、打包 zip
-          </p>
-        </div>
-        <input
-          id="fileInput"
-          type="file"
-          multiple
-          accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp"
-          hidden
-        >
-      </section>
-
-      <section class="panel options-panel">
-        <h3 data-i18n="optionsTitle">选项</h3>
-        <div class="options-grid">
-          <label class="field">
-            <span data-i18n="optFormat">输出格式</span>
-            <select id="optFormat">
-              <option value="image/webp" selected>WebP</option>
-              <option value="image/jpeg">JPEG</option>
-              <option value="image/png">PNG</option>
-              <option value="original" data-i18n="formatOriginal">保持原格式</option>
-            </select>
-          </label>
-          <label class="field range-field" id="qualityField">
-            <span data-i18n="optQuality">质量（WebP / JPEG）</span>
-            <div class="range-row">
-              <input type="range" id="optQuality" min="0.4" max="1" step="0.05" value="0.82">
-              <span class="range-value" id="qualityValue">0.82</span>
-            </div>
-          </label>
-          <label class="field">
-            <span data-i18n="optMaxEdge">最长边 (px)，0 = 不缩放</span>
-            <input type="number" id="optMaxEdge" min="0" max="20000" step="10" value="0" placeholder="0">
-          </label>
-          <label class="field">
-            <span data-i18n="optFilename">打包 zip 文件名</span>
-            <input type="text" id="optFilename" value="images" placeholder="images" autocomplete="off">
-          </label>
-          <label class="check">
-            <input type="checkbox" id="optZip" checked>
-            <span data-i18n-html="optZip">全部打包成<strong>一个 zip</strong>（关闭则逐张下载）</span>
-          </label>
-          <label class="check">
-            <input type="checkbox" id="optKeepName" checked>
-            <span data-i18n="optKeepName">保留原文件名（仅换扩展名）</span>
-          </label>
+    <main id="main" class="main">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-kicker"><span class="spark" aria-hidden="true"></span><span data-i18n="eyebrow">A CALMER IMAGE WORKFLOW</span></div>
+        <h1 id="heroTitle" data-i18n="heroTitle">让图片更轻，也依然好看。</h1>
+        <p class="tagline" data-i18n="tagline">批量压缩、改尺寸、转格式，一次完成。所有处理都在你的设备上安静完成。</p>
+        <div class="hero-badges" data-i18n-aria-label="featuresAria" aria-label="产品特点">
+          <span class="hero-badge"><i class="hero-badge-dot blue"></i><span data-i18n="badgeNoInstall">无需安装</span></span>
+          <span class="hero-badge"><i class="hero-badge-dot green"></i><span data-i18n="badgeLocal">本地处理</span></span>
+          <span class="hero-badge"><i class="hero-badge-dot pink"></i><span data-i18n="badgeBatch">批量完成</span></span>
         </div>
       </section>
 
-      <section class="panel list-panel">
-        <div class="list-head">
-          <h3><span data-i18n="queueTitle">图片队列</span> <span id="fileCount" class="muted">0</span></h3>
-          <div class="list-actions">
-            <button type="button" id="btnClear" class="btn ghost" disabled data-i18n="btnClear">清空</button>
-            <button type="button" id="btnConvert" class="btn primary" disabled data-i18n="btnConvert">开始处理</button>
+      <ol id="workflowSteps" class="workflow-steps" data-i18n-aria-label="workflowAria" aria-label="处理步骤">
+        <li class="active" data-workflow-step="1" aria-current="step"><span>1</span><strong data-i18n="workflowImport">导入图片</strong></li>
+        <li data-workflow-step="2"><span>2</span><strong data-i18n="workflowTune">选择方案</strong></li>
+        <li data-workflow-step="3"><span>3</span><strong data-i18n="workflowExport">处理下载</strong></li>
+      </ol>
+
+      <section id="dropzone" class="dropzone" tabindex="0" role="button" data-testid="dropzone" data-i18n-aria-label="dropzoneAria" aria-label="拖入或点击选择要处理的图片">
+        <div class="dropzone-visual" aria-hidden="true">
+          <span class="photo-sheet sheet-back"></span>
+          <span class="photo-sheet sheet-middle"></span>
+          <span class="photo-sheet sheet-front">
+            <svg viewBox="0 0 32 32"><circle cx="21.5" cy="10.5" r="2.5"></circle><path d="m6 25 7.5-8 4.7 4.5 3-2.8L26 23"></path></svg>
+          </span>
+          <span class="drop-plus">+</span>
+        </div>
+        <div class="dropzone-content">
+          <div class="step-label" data-i18n="stepImport">01 · 导入</div>
+          <h2 data-i18n="dropTitle">把图片放到这里</h2>
+          <p class="drop-hint" data-i18n="dropHint">拖放图片，或从设备中选择多个文件。</p>
+          <span class="drop-action">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10"></path><path d="m6 7 4-4 4 4"></path><path d="M4 16h12"></path></svg>
+            <span data-i18n="chooseFiles">选择图片</span>
+          </span>
+          <div class="format-row" aria-hidden="true">
+            <span>PNG</span><span>JPG</span><span>WEBP</span><span>GIF</span><span>BMP</span>
           </div>
+          <p class="formats" data-i18n="dropFormats">支持 PNG、JPG、WEBP、GIF、BMP · 单张最大 40 MB</p>
         </div>
-        <p class="hint" data-i18n-html="queueHint">按住手柄 <span class="handle-demo">⠿</span> 拖动可调整顺序。打包 zip 时按此顺序命名。</p>
-        <ul id="fileList" class="file-list" aria-live="polite"></ul>
-        <div id="emptyState" class="empty-state" data-i18n="emptyState">还没有图片。拖入后会出现在这里。</div>
+        <div class="local-promise">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 8V6a3.5 3.5 0 0 1 7 0v2"></path><rect x="4" y="8" width="12" height="9" rx="2.5"></rect><path d="m8 12 1.4 1.4L12.5 10"></path></svg>
+          <span data-i18n="localPromise">图片不会离开此设备</span>
+        </div>
+        <input id="fileInput" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp" hidden>
       </section>
 
-      <section class="panel status-panel" id="statusPanel" hidden>
-        <div class="status-row">
-          <div id="statusText" class="status-text" data-i18n="statusPreparing">准备中…</div>
-          <div id="statusPct" class="status-pct">0%</div>
-        </div>
-        <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
-        <div id="statusDetail" class="status-detail muted"></div>
+      <div class="workspace-grid">
+        <section class="panel options-panel" aria-labelledby="optionsTitle">
+          <div class="panel-heading">
+            <div>
+              <div class="step-label" data-i18n="stepOptions">02 · 设置</div>
+              <h2 id="optionsTitle" data-i18n="optionsTitle">输出方案</h2>
+              <p data-i18n="optionsSubtitle">先选一个适合的预设，再按需要微调。</p>
+            </div>
+            <span class="panel-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg>
+            </span>
+          </div>
+
+          <div class="preset-section">
+            <div class="field-label" data-i18n="presetsLabel">快捷预设</div>
+            <div id="presetList" class="preset-grid" role="group" data-i18n-aria-label="presetsAria" aria-label="快捷预设"></div>
+          </div>
+
+          <div class="options-stack">
+            <label class="field">
+              <span class="field-label" data-i18n="optFormat">输出格式</span>
+              <select id="optFormat">
+                <option value="image/webp" selected>WebP</option>
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/png">PNG</option>
+                <option value="original" data-i18n="formatOriginal">尽量保持源格式</option>
+              </select>
+              <span id="formatHelp" class="field-help"></span>
+            </label>
+
+            <label class="field range-field" id="qualityField">
+              <span class="field-title-row">
+                <span class="field-label" data-i18n="optQuality">画质</span>
+                <output class="range-value" id="qualityValue" for="optQuality">82%</output>
+              </span>
+              <input type="range" id="optQuality" min="0.4" max="1" step="0.01" value="0.82">
+              <span id="qualityHelp" class="field-help"></span>
+            </label>
+
+            <label class="field">
+              <span class="field-label" data-i18n="optMaxEdge">最长边</span>
+              <span class="input-suffix-wrap">
+                <input type="number" id="optMaxEdge" min="0" max="20000" step="10" value="0" inputmode="numeric" placeholder="0">
+                <span class="input-suffix" data-i18n="maxEdgeSuffix">px</span>
+              </span>
+              <span class="field-help" data-i18n="maxEdgeHelp">0 表示保留尺寸；只缩小，不放大小图。</span>
+            </label>
+          </div>
+
+          <div class="option-divider"><span data-i18n="deliveryTitle">下载方式</span></div>
+
+          <div class="toggle-stack">
+            <label class="toggle-row">
+              <span class="toggle-icon zip-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 3h8l3 3v10a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 16V4.5A1.5 1.5 0 0 1 4.5 3H6Z"></path><path d="M10 3v8M8 5h2M10 7h2M8 9h2M10 11h2"></path></svg></span>
+              <span class="toggle-copy">
+                <strong data-i18n="optZip">全部打包为一个 ZIP</strong>
+                <small data-i18n="optZipHint">推荐用于多张图片，浏览器只触发一次下载。</small>
+              </span>
+              <input type="checkbox" id="optZip" checked>
+              <span class="switch" aria-hidden="true"></span>
+            </label>
+
+            <label class="toggle-row">
+              <span class="toggle-icon name-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 4h10M5 10h10M5 16h7"></path></svg></span>
+              <span class="toggle-copy">
+                <strong data-i18n="optKeepName">保留原文件名</strong>
+                <small data-i18n="optKeepNameHint">关闭后按队列顺序命名为 image-1、image-2…</small>
+              </span>
+              <input type="checkbox" id="optKeepName" checked>
+              <span class="switch" aria-hidden="true"></span>
+            </label>
+          </div>
+
+          <label class="field zip-name-field" id="zipNameField">
+            <span class="field-label" data-i18n="optFilename">ZIP 文件名</span>
+            <input type="text" id="optFilename" value="images" placeholder="images" autocomplete="off" spellcheck="false">
+          </label>
+        </section>
+
+        <section class="panel list-panel" aria-labelledby="queueTitle">
+          <div class="list-head">
+            <div>
+              <div class="step-label" data-i18n="stepQueue">03 · 处理</div>
+              <div class="queue-title-row">
+                <h2 id="queueTitle" data-i18n="queueTitle">图片队列</h2>
+                <span id="fileCount" class="count-pill">0 张</span>
+                <span id="totalSize" class="muted">共 0 B</span>
+              </div>
+            </div>
+            <button type="button" id="btnClear" class="btn ghost" disabled data-i18n="btnClear">清空</button>
+          </div>
+
+          <p class="hint" data-i18n="queueHint">拖动手柄调整顺序；键盘聚焦手柄后可用 ↑ / ↓ 排序。</p>
+          <ul id="fileList" class="file-list" aria-live="polite"></ul>
+          <div id="emptyState" class="empty-state">
+            <div class="empty-visual" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <strong data-i18n="emptyTitle">你的图片会出现在这里</strong>
+            <p data-i18n="emptyState">导入后可以预览、排序和移除。</p>
+          </div>
+
+          <section class="status-panel" id="statusPanel" hidden aria-live="polite">
+            <div class="status-row">
+              <div id="statusText" class="status-text" data-i18n="statusPreparing">正在准备…</div>
+              <div id="statusPct" class="status-pct">0%</div>
+            </div>
+            <div class="progress" id="progressTrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="statusText">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="statusDetail" class="status-detail muted"></div>
+          </section>
+
+          <div class="action-bar">
+            <div id="actionHint" class="action-hint" data-i18n="actionEmpty">先添加图片，再开始处理</div>
+            <button type="button" id="btnConvert" class="btn primary" disabled>
+              <span id="btnConvertLabel" data-i18n="btnConvert">开始处理</span>
+              <span id="btnCount" class="button-count" hidden>0</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11"></path><path d="m11 6 4 4-4 4"></path></svg>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <section class="trust-grid" data-i18n-aria-label="guaranteesAria" aria-label="产品保障">
+        <article class="trust-card">
+          <span class="trust-icon trust-icon-blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2"></path><rect x="5" y="10" width="14" height="10" rx="3"></rect><path d="m9.5 15 1.6 1.6 3.7-3.7"></path></svg></span>
+          <div><strong data-i18n="trustLocalTitle">100% 本地</strong><p data-i18n="trustLocalText">文件不上传服务器</p></div>
+        </article>
+        <article class="trust-card">
+          <span class="trust-icon trust-icon-pink" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"></rect><path d="M8 9h8M8 13h5"></path></svg></span>
+          <div><strong data-i18n="trustBatchTitle">真正批量</strong><p data-i18n="trustBatchText">排序、转换、一次下载</p></div>
+        </article>
+        <article class="trust-card">
+          <span class="trust-icon trust-icon-green" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 20h14"></path></svg></span>
+          <div><strong data-i18n="trustOfflineTitle">可离线使用</strong><p data-i18n="trustOfflineText">依赖已随项目打包</p></div>
+        </article>
       </section>
 
-      <section class="panel tips-panel">
-        <h3 data-i18n="tipsTitle">说明</h3>
+      <details class="panel tips-panel">
+        <summary>
+          <span class="summary-title"><span class="info-icon" aria-hidden="true">i</span><span data-i18n="tipsTitle">格式与隐私说明</span></span>
+          <span class="summary-chevron" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m6 8 4 4 4-4"></path></svg></span>
+        </summary>
         <ul class="tips">
-          <li data-i18n-html="tip1">处理在你的浏览器内存里完成，图片<strong>不会上传</strong>到任何服务器。</li>
-          <li data-i18n-html="tip2">最长边只会<strong>等比缩小</strong>，不会把小图放大。设 <code>0</code> 表示保持原尺寸。</li>
-          <li data-i18n-html="tip3">质量滑块只对 <code>WebP</code> 与 <code>JPEG</code> 生效；<code>PNG</code> 为无损，忽略质量。</li>
-          <li data-i18n-html="tip4">重编码会<strong>移除 EXIF</strong>（含拍摄信息与方向标记）。若原图带旋转 EXIF，浏览器会先按方向绘制。</li>
-          <li data-i18n-html="tip5">依赖库已放在 <code>web/vendor/</code>，可用本地静态服务<strong>完全离线</strong>使用（推荐 <code>python -m http.server</code>）。</li>
+          <li data-i18n-html="tip1">处理在浏览器内存中完成，图片<strong>不会上传</strong>到任何服务器。</li>
+          <li data-i18n-html="tip2">最长边只会<strong>等比缩小</strong>。设为 <code>0</code> 时保持原尺寸。</li>
+          <li data-i18n-html="tip3">画质只影响 <code>WebP</code> 与 <code>JPEG</code>；<code>PNG</code> 为无损格式。</li>
+          <li data-i18n-html="tip4">重编码会<strong>移除 EXIF</strong>。GIF/BMP 选择保持源格式且不缩放时原样下载；否则 GIF 只输出当前静态帧。</li>
+          <li data-i18n-html="tip5">工具无需网络请求，可通过本地静态服务<strong>完全离线</strong>运行。</li>
         </ul>
-      </section>
+      </details>
     </main>
 
     <footer class="footer">
       <div class="footer-left">
-        <span>KenEasy Image Kit · MIT</span>
+        <span class="footer-brand">KenEasy Image Kit</span>
         <span class="muted" data-i18n="footerNote">开源 · 纯前端 · 可离线</span>
       </div>
       <div class="footer-right">
-        <a
-          class="footer-link"
-          href="https://github.com/ngiken/KenEasy-Image-Kit"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-i18n="footerGithub"
-        >GitHub 仓库</a>
-        <span class="footer-dot" aria-hidden="true">·</span>
-        <a
-          class="footer-link footer-star"
-          href="https://github.com/ngiken/KenEasy-Image-Kit"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-i18n="footerStar"
-        >欢迎 Star ★</a>
+        <span>MIT © 2026</span>
+        <a class="footer-link" href="https://github.com/ngiken/KenEasy-Image-Kit" target="_blank" rel="noopener noreferrer" data-i18n="footerGithub">GitHub 仓库</a>
       </div>
     </footer>
   </div>
 
-  <!-- Vendored offline (see web/vendor/NOTICE.txt) -->
+  <noscript><div class="noscript" data-i18n="noscript">此工具需要 JavaScript 才能在本地处理图片。</div></noscript>
+
   <script src="vendor/Sortable.min.js"></script>
   <script src="vendor/jszip.min.js"></script>
-  <script src="app.js"></script>
+  <script src="config.js?v=0.3.0"></script>
+  <script src="i18n.js?v=0.3.0"></script>
+  <script src="image-engine.js?v=0.3.0"></script>
+  <script src="app.js?v=0.3.0"></script>
 </body>
 </html>

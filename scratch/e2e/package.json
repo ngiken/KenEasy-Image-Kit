@@ -1,16 +1,19 @@
 {
   "name": "e2e",
   "version": "1.0.0",
-  "description": "",
+  "description": "End-to-end tests for KenEasy Image Kit",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node run.mjs",
+    "capture:readme": "node capture-readme.mjs && python build-readme-gif.py"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "jszip": "^3.10.1",
     "playwright": "^1.61.1"
-  }
+  },
+  "private": true
 }

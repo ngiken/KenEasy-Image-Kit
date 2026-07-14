@@ -29,11 +29,9 @@
 
 <br/><br/>
 
-<a href="https://ngiken.github.io/KenEasy-Image-Kit/">
-  <img src="./docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 浅色主界面" width="1200">
-</a>
+<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 浅色主界面" width="1200">
 
-<sub>Apple-inspired 自适应界面 · 点击截图即可打开在线工具</sub>
+<sub>Apple-inspired 自适应界面 · 在线工具链接见上方</sub>
 
 </div>
 
@@ -52,7 +50,7 @@
 ### 操作演示
 
 <p align="center">
-  <img src="./docs/screenshots/quick-tour.gif" alt="导入图片、选择预设、处理并下载的三步动画演示" width="960">
+  <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/quick-tour.gif" alt="导入图片、选择预设、处理并下载的三步动画演示" width="960">
 </p>
 
 <p align="center"><strong>① 导入图片　→　② 选择方案　→　③ 本地处理并下载</strong></p>
@@ -82,10 +80,10 @@ KenEasy Image Kit 是一个**纯前端**图片工具：
 
 | 浅色工作区 | 深色工作区 |
 | --- | --- |
-| <img src="./docs/screenshots/workspace-light.png" alt="浅色输出设置与图片队列"> | <img src="./docs/screenshots/workspace-dark.png" alt="深色输出设置与图片队列"> |
+| <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/workspace-light.png" alt="浅色输出设置与图片队列"> | <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/workspace-dark.png" alt="深色输出设置与图片队列"> |
 
 <p align="center">
-  <img src="./docs/screenshots/mobile-light.png" alt="KenEasy Image Kit 手机界面" width="360">
+  <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/mobile-light.png" alt="KenEasy Image Kit 手机界面" width="360">
 </p>
 
 <p align="center"><sub>桌面双栏、手机单栏；浅色／深色模式均会记住你的选择。</sub></p>

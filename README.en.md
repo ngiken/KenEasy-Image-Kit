@@ -29,11 +29,9 @@ Files are processed entirely in your browser: **no upload, no install, no signup
 
 <br/><br/>
 
-<a href="https://ngiken.github.io/KenEasy-Image-Kit/">
-  <img src="./docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 light hero" width="1200">
-</a>
+<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 light hero" width="1200">
 
-<sub>Apple-inspired adaptive interface · click the screenshot to open the live tool</sub>
+<sub>Apple-inspired adaptive interface · live tool linked above</sub>
 
 </div>
 
@@ -52,7 +50,7 @@ That's it. No account, no installer, no server upload.
 ### See the flow
 
 <p align="center">
-  <img src="./docs/screenshots/quick-tour.gif" alt="Three-step demo: import images, choose a preset, process and download" width="960">
+  <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/quick-tour.gif" alt="Three-step demo: import images, choose a preset, process and download" width="960">
 </p>
 
 <p align="center"><strong>① Import images　→　② Choose a recipe　→　③ Process locally and download</strong></p>
@@ -82,10 +80,10 @@ Good for: shrinking images before sharing, batch-converting screenshots, preppin
 
 | Light workspace | Dark workspace |
 | --- | --- |
-| <img src="./docs/screenshots/workspace-light.png" alt="Light output settings and image queue"> | <img src="./docs/screenshots/workspace-dark.png" alt="Dark output settings and image queue"> |
+| <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/workspace-light.png" alt="Light output settings and image queue"> | <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/workspace-dark.png" alt="Dark output settings and image queue"> |
 
 <p align="center">
-  <img src="./docs/screenshots/mobile-light.png" alt="KenEasy Image Kit mobile interface" width="360">
+  <img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/mobile-light.png" alt="KenEasy Image Kit mobile interface" width="360">
 </p>
 
 <p align="center"><sub>Two-column desktop, single-column mobile, with persisted light and dark appearances.</sub></p>

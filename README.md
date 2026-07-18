@@ -23,13 +23,13 @@
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%BF%E7%94%A8-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.0-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.1-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
 
-<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 浅色主界面" width="1200">
+<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.1 浅色主界面" width="1200">
 
 <sub>Apple-inspired 自适应界面 · 在线工具链接见上方</sub>
 
@@ -182,6 +182,13 @@ npm run capture:readme
 ---
 
 ## 更新说明
+
+### v0.3.1
+- 新用户默认选择「尽量保持源格式」，JPEG、PNG 与 WebP 会维持各自输出格式
+- 「更小文件」改为原尺寸 WebP 压缩，画质范围扩展至 10%–100%，不再隐式缩小图片
+- ZIP 下载改为默认关闭，只有主动开启才打包
+- 所有输出设置改为即时保存，转换、换图或立即刷新都不会恢复初始值
+- 回归测试扩展至 55 项，加入真实像素差异、尺寸保持、格式保持与默认行为验证
 
 ### v0.3.0
 - 全面升级为 Apple-inspired 自适应玻璃界面：中性留白、柔和层次与克制的 KenEasy 粉蓝点缀

@@ -107,14 +107,16 @@
 
   function normalizeSettings(candidate) {
     var defaults = config.defaults;
+    var qualityRule = config.controls.quality;
+    var maxEdgeRule = config.controls.maxEdge;
     var allowedFormats = config.outputOptions.map(function (option) { return option.value; });
     var quality = parseFloat(candidate && candidate.quality);
     var maxEdge = parseInt(candidate && candidate.maxEdge, 10);
     var format = candidate && allowedFormats.indexOf(candidate.format) >= 0 ? candidate.format : defaults.format;
     return {
       format: format,
-      quality: isNaN(quality) ? defaults.quality : clamp(quality, 0.4, 1),
-      maxEdge: isNaN(maxEdge) ? defaults.maxEdge : clamp(maxEdge, 0, 20000),
+      quality: isNaN(quality) ? defaults.quality : clamp(quality, qualityRule.min, qualityRule.max),
+      maxEdge: isNaN(maxEdge) ? defaults.maxEdge : clamp(maxEdge, maxEdgeRule.min, maxEdgeRule.max),
       zip: candidate && typeof candidate.zip === "boolean" ? candidate.zip : defaults.zip,
       keepName: candidate && typeof candidate.keepName === "boolean" ? candidate.keepName : defaults.keepName,
       filename: engine.sanitizeFilename(candidate && candidate.filename || defaults.filename),
@@ -154,16 +156,23 @@
   }
 
   function scheduleSettingsSave() {
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () {
-      try {
-        localStorage.setItem(config.storageKeys.settings, JSON.stringify(readOptions()));
-      } catch (error) {}
-    }, 120);
+    saveSettingsNow();
+  }
+
+  function saveSettingsNow() {
+    if (saveTimer) {
+      clearTimeout(saveTimer);
+      saveTimer = null;
+    }
+    try {
+      localStorage.setItem(config.storageKeys.settings, JSON.stringify(readOptions()));
+    } catch (error) {}
   }
 
   function renderFormatOptions() {
     var selected = els.optFormat.value || config.defaults.format;
+    var qualityRule = config.controls.quality;
+    var maxEdgeRule = config.controls.maxEdge;
     els.optFormat.innerHTML = "";
     config.outputOptions.forEach(function (rule) {
       var option = document.createElement("option");
@@ -174,6 +183,12 @@
     });
     els.optFormat.value = config.outputOptions.some(function (rule) { return rule.value === selected; })
       ? selected : config.defaults.format;
+    els.optQuality.min = String(qualityRule.min);
+    els.optQuality.max = String(qualityRule.max);
+    els.optQuality.step = String(qualityRule.step);
+    els.optMaxEdge.min = String(maxEdgeRule.min);
+    els.optMaxEdge.max = String(maxEdgeRule.max);
+    els.optMaxEdge.step = String(maxEdgeRule.step);
     els.fileInput.accept = config.input.mimeTypes.concat(config.input.accept.map(function (extension) {
       return "." + extension;
     })).join(",");
@@ -236,15 +251,18 @@
 
   function syncControlPresentation() {
     var options = readOptions();
+    var qualityRule = config.controls.quality;
     var qualityEnabled = engine.formatUsesQuality(options.format) && !busy;
     var qualityPercent = Math.round(options.quality * 100);
-    var rangeProgress = ((options.quality - 0.4) / 0.6) * 100;
+    var rangeProgress = ((options.quality - qualityRule.min) / (qualityRule.max - qualityRule.min)) * 100;
     els.qualityValue.textContent = qualityPercent + "%";
     els.optQuality.style.setProperty("--range-progress", clamp(rangeProgress, 0, 100) + "%");
     els.optQuality.setAttribute("aria-valuetext", qualityPercent + "%");
     els.optQuality.disabled = !qualityEnabled;
     els.qualityField.classList.toggle("is-disabled", !engine.formatUsesQuality(options.format));
-    els.qualityHelp.textContent = engine.formatUsesQuality(options.format) ? "" : t("qualityDisabled");
+    els.qualityHelp.textContent = engine.formatUsesQuality(options.format)
+      ? t(options.format === "original" ? "qualityOriginal" : "qualityLossy")
+      : t("qualityDisabled");
 
     var formatRule = config.outputOptions.find(function (rule) { return rule.value === options.format; });
     els.formatHelp.textContent = t(formatRule ? formatRule.helpKey : config.outputOptions[0].helpKey);
@@ -652,6 +670,7 @@
       return;
     }
     var options = readOptions();
+    saveSettingsNow();
     if (options.zip && !global.JSZip) {
       toast(t("zipMissing"), true);
       return;
@@ -801,7 +820,10 @@
     els.optZip.addEventListener("change", handleOptionChange);
     els.optKeepName.addEventListener("change", handleOptionChange);
     els.optFilename.addEventListener("input", scheduleSettingsSave);
-    global.addEventListener("beforeunload", function () { items.forEach(releasePreview); });
+    global.addEventListener("beforeunload", function () {
+      saveSettingsNow();
+      items.forEach(releasePreview);
+    });
   }
 
   function cacheElements() {

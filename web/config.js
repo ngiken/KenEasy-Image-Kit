@@ -3,7 +3,7 @@
   "use strict";
 
   var config = {
-    version: "0.3.0",
+    version: "0.3.1",
     storageKeys: {
       language: "keneasy-imagekit-lang",
       appearance: "keneasy-imagekit-appearance",
@@ -39,11 +39,15 @@
       { value: "image/png", label: "PNG", helpKey: "formatHelpPng" },
       { value: "original", labelKey: "formatOriginal", helpKey: "formatHelpOriginal" },
     ],
+    controls: {
+      quality: { min: 0.1, max: 1, step: 0.01 },
+      maxEdge: { min: 0, max: 20000, step: 10 },
+    },
     defaults: {
-      format: "image/webp",
+      format: "original",
       quality: 0.82,
       maxEdge: 0,
-      zip: true,
+      zip: false,
       keepName: true,
       filename: "images",
     },
@@ -58,7 +62,7 @@
         id: "smaller",
         nameKey: "presetSmaller",
         descKey: "presetSmallerDesc",
-        values: { format: "image/webp", quality: 0.7, maxEdge: 1920 },
+        values: { format: "image/webp", quality: 0.5, maxEdge: 0 },
       },
       {
         id: "quality",

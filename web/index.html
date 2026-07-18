@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#f5f5f7">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <link rel="stylesheet" href="styles.css?v=0.3.0">
+  <link rel="stylesheet" href="styles.css?v=0.3.1">
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skipToMain">跳到主要内容</a>
@@ -132,10 +132,10 @@
             <label class="field">
               <span class="field-label" data-i18n="optFormat">输出格式</span>
               <select id="optFormat">
-                <option value="image/webp" selected>WebP</option>
+                <option value="image/webp">WebP</option>
                 <option value="image/jpeg">JPEG</option>
                 <option value="image/png">PNG</option>
-                <option value="original" data-i18n="formatOriginal">尽量保持源格式</option>
+                <option value="original" selected data-i18n="formatOriginal">尽量保持源格式</option>
               </select>
               <span id="formatHelp" class="field-help"></span>
             </label>
@@ -145,7 +145,7 @@
                 <span class="field-label" data-i18n="optQuality">画质</span>
                 <output class="range-value" id="qualityValue" for="optQuality">82%</output>
               </span>
-              <input type="range" id="optQuality" min="0.4" max="1" step="0.01" value="0.82">
+              <input type="range" id="optQuality" min="0.1" max="1" step="0.01" value="0.82">
               <span id="qualityHelp" class="field-help"></span>
             </label>
 
@@ -168,7 +168,7 @@
                 <strong data-i18n="optZip">全部打包为一个 ZIP</strong>
                 <small data-i18n="optZipHint">推荐用于多张图片，浏览器只触发一次下载。</small>
               </span>
-              <input type="checkbox" id="optZip" checked>
+              <input type="checkbox" id="optZip">
               <span class="switch" aria-hidden="true"></span>
             </label>
 
@@ -280,9 +280,9 @@
 
   <script src="vendor/Sortable.min.js"></script>
   <script src="vendor/jszip.min.js"></script>
-  <script src="config.js?v=0.3.0"></script>
-  <script src="i18n.js?v=0.3.0"></script>
-  <script src="image-engine.js?v=0.3.0"></script>
-  <script src="app.js?v=0.3.0"></script>
+  <script src="config.js?v=0.3.1"></script>
+  <script src="i18n.js?v=0.3.1"></script>
+  <script src="image-engine.js?v=0.3.1"></script>
+  <script src="app.js?v=0.3.1"></script>
 </body>
 </html>

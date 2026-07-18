@@ -85,6 +85,16 @@ check(
   await page.evaluate(() => !!window.KenEasyImageKitConfig && !!window.KenEasyImageKitI18n && !!window.KenEasyImageEngine)
 );
 check("four data-driven presets rendered", (await page.$$("#presetList .preset-btn")).length === 4);
+check("source format is selected by default", await page.evaluate(() =>
+  document.getElementById("optFormat").value === "original" &&
+  window.KenEasyImageKitConfig.defaults.format === "original"
+));
+check("ZIP download is opt-in by default", await page.evaluate(() => !document.getElementById("optZip").checked));
+check("quality range is rendered from configuration", await page.evaluate(() => {
+  const input = document.getElementById("optQuality");
+  const rule = window.KenEasyImageKitConfig.controls.quality;
+  return Number(input.min) === rule.min && Number(input.max) === rule.max && Number(input.step) === rule.step;
+}));
 check("workflow starts at import", await page.evaluate(() => {
   const current = document.querySelector('#workflowSteps [aria-current="step"]');
   return current && current.dataset.workflowStep === "1";
@@ -180,21 +190,40 @@ check("keyboard ArrowUp restores queue order", /photo-a/.test(await page.textCon
 
 // Data-driven preset and conditional option behavior.
 await page.click('[data-preset-id="smaller"]');
-check("smaller preset applies format, quality, and edge", await page.evaluate(() =>
+check("smaller preset compresses without resizing", await page.evaluate(() =>
   document.getElementById("optFormat").value === "image/webp" &&
-  document.getElementById("optQuality").value === "0.7" &&
-  document.getElementById("optMaxEdge").value === "1920"
+  document.getElementById("optQuality").value === "0.5" &&
+  document.getElementById("optMaxEdge").value === "0"
 ));
 await page.selectOption("#optFormat", "image/png");
 check("PNG disables the quality control", await page.evaluate(() => document.getElementById("optQuality").disabled));
-await page.evaluate(() => document.getElementById("optZip").click());
+await page.evaluate(() => {
+  const zip = document.getElementById("optZip");
+  if (zip.checked) zip.click();
+});
 check("separate download disables ZIP filename", await page.evaluate(() => document.getElementById("optFilename").disabled));
-await page.evaluate(() => document.getElementById("optZip").click());
+await page.evaluate(() => {
+  const zip = document.getElementById("optZip");
+  if (!zip.checked) zip.click();
+});
 check("original-format rules are explicit for GIF/BMP", await page.evaluate(() => {
   const engine = window.KenEasyImageEngine.create(window.KenEasyImageKitConfig);
   const item = { name: "motion.gif", file: new File(["gif"], "motion.gif", { type: "image/gif" }) };
   return engine.outputPlan(item, { format: "original", maxEdge: 0 }).mode === "passthrough" &&
     engine.outputPlan(item, { format: "original", maxEdge: 800 }).type === "image/png";
+}));
+check("source mode preserves JPEG, PNG, and WebP output types", await page.evaluate(() => {
+  const engine = window.KenEasyImageEngine.create(window.KenEasyImageKitConfig);
+  const options = { format: "original", maxEdge: 0 };
+  return [
+    ["photo.jpg", "image/jpeg"],
+    ["logo.png", "image/png"],
+    ["share.webp", "image/webp"],
+  ].every(([name, type]) => {
+    const item = { name, file: new File(["source"], name, { type }) };
+    const plan = engine.outputPlan(item, options);
+    return plan.mode === "encode" && plan.type === type && !plan.fallback;
+  });
 }));
 
 // ---- reorder test: drag last before first via Sortable API-like DOM swap won't fire onEnd;
@@ -373,8 +402,8 @@ if (zip3) {
   }
 }
 
-// TEST 4: quality lower → smaller webp file than higher quality
-await setOpts({ format: "image/webp", quality: 0.4, maxEdge: 0, zip: true, keepName: true, filename: "q-low" });
+// TEST 4: quality lower → smaller and visibly different WebP, with identical dimensions
+await setOpts({ format: "image/webp", quality: 0.1, maxEdge: 0, zip: true, keepName: true, filename: "q-low" });
 await runProcess();
 await setOpts({ format: "image/webp", quality: 0.95, maxEdge: 0, zip: true, keepName: true, filename: "q-high" });
 await runProcess();
@@ -386,7 +415,46 @@ if (zlow && zhigh) {
   const la = lo.find((e) => /photo-a/.test(e.name)).buf.length;
   const ha = hi.find((e) => /photo-a/.test(e.name)).buf.length;
   check("lower quality → smaller webp than higher quality", la < ha, `low=${la}B high=${ha}B`);
+  const lowSize = webpSize(lo.find((e) => /photo-a/.test(e.name)).buf);
+  const highSize = webpSize(hi.find((e) => /photo-a/.test(e.name)).buf);
+  check("quality compression preserves exact dimensions", lowSize.w === highSize.w && lowSize.h === highSize.h && lowSize.w === 1200 && lowSize.h === 800, `${lowSize.w}x${lowSize.h} / ${highSize.w}x${highSize.h}`);
 }
+
+const qualityEffect = await page.evaluate(async () => {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512; canvas.height = 384;
+  const context = canvas.getContext("2d");
+  const pixels = context.createImageData(canvas.width, canvas.height);
+  for (let i = 0; i < pixels.data.length; i += 4) {
+    const p = i / 4; const x = p % canvas.width; const y = Math.floor(p / canvas.width);
+    pixels.data[i] = (x * 37 + y * 17) % 256;
+    pixels.data[i + 1] = (x * 11 + y * 53) % 256;
+    pixels.data[i + 2] = ((x ^ y) * 29) % 256;
+    pixels.data[i + 3] = 255;
+  }
+  context.putImageData(pixels, 0, 0);
+  const source = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+  const item = { name: "detail.png", file: new File([source], "detail.png", { type: "image/png" }) };
+  const engine = window.KenEasyImageEngine.create(window.KenEasyImageKitConfig);
+  const low = await engine.process(item, { format: "image/webp", quality: 0.1, maxEdge: 0 });
+  const high = await engine.process(item, { format: "image/webp", quality: 0.95, maxEdge: 0 });
+  async function rgba(blob) {
+    const bitmap = await createImageBitmap(blob);
+    const surface = document.createElement("canvas"); surface.width = bitmap.width; surface.height = bitmap.height;
+    const target = surface.getContext("2d"); target.drawImage(bitmap, 0, 0); bitmap.close();
+    return target.getImageData(0, 0, surface.width, surface.height).data;
+  }
+  const a = await rgba(low.blob); const b = await rgba(high.blob);
+  let squaredError = 0;
+  for (let i = 0; i < a.length; i += 4) {
+    for (let channel = 0; channel < 3; channel++) {
+      const delta = a[i + channel] - b[i + channel]; squaredError += delta * delta;
+    }
+  }
+  return { width: low.width, height: low.height, mse: squaredError / (canvas.width * canvas.height * 3) };
+});
+check("quality value changes decoded image pixels", qualityEffect.mse > 1, `MSE=${qualityEffect.mse.toFixed(2)}`);
+check("stronger compression keeps canvas dimensions", qualityEffect.width === 512 && qualityEffect.height === 384, `${qualityEffect.width}x${qualityEffect.height}`);
 
 // TEST 5: rapid removal must resolve by stable item id, not stale indexes.
 const removeButtons = await page.$$("#fileList .icon-btn");

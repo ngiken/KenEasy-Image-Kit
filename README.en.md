@@ -23,13 +23,13 @@ Files are processed entirely in your browser: **no upload, no install, no signup
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/use%20online-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.0-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.1-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
 
-<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.0 light hero" width="1200">
+<img src="https://raw.githubusercontent.com/ngiken/KenEasy-Image-Kit/main/docs/screenshots/hero-light.png" alt="KenEasy Image Kit v0.3.1 light hero" width="1200">
 
 <sub>Apple-inspired adaptive interface · live tool linked above</sub>
 
@@ -182,6 +182,13 @@ npm run capture:readme
 ---
 
 ## Changelog
+
+### v0.3.1
+- New users now default to Keep source format, preserving JPEG, PNG, and WebP output types
+- Changed the Smaller preset to original-dimension WebP compression and expanded quality to 10%–100% without hidden resizing
+- Made ZIP downloads opt-in instead of enabled by default
+- Persist output settings immediately so conversion, changing images, or an instant reload never restores initial values
+- Expanded regression coverage to 55 checks, including decoded pixel differences, dimensions, source formats, and defaults
 
 ### v0.3.0
 - Reimagined the product with an Apple-inspired adaptive glass interface, calm spacing, and restrained KenEasy pink/cyan accents

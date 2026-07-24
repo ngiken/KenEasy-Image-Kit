@@ -224,6 +224,11 @@ npm run capture:readme
 
 ---
 
+
+## Friends / 友情链接
+
+- [LINUX DO](https://linux.do)
+
 ## License
 
 [MIT](LICENSE) © 2026

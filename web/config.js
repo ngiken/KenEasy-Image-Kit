@@ -3,7 +3,7 @@
   "use strict";
 
   var config = {
-    version: "0.3.1",
+    version: "0.3.2",
     storageKeys: {
       language: "keneasy-imagekit-lang",
       appearance: "keneasy-imagekit-appearance",

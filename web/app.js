@@ -156,7 +156,8 @@
   }
 
   function scheduleSettingsSave() {
-    saveSettingsNow();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveSettingsNow, 100);
   }
 
   function saveSettingsNow() {
@@ -429,6 +430,7 @@
     items = [];
     renderList();
     hideStatus();
+    toast(t("queueCleared"));
   }
 
   function moveItem(id, delta) {
@@ -636,7 +638,7 @@
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
-    setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
   }
 
   function wait(ms) {

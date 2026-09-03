@@ -15,9 +15,11 @@
 
     function sanitizeFilename(name) {
       return String(name || "")
+        .replace(/\.zip$/i, "")
         .replace(/[\\/:*?"<>|\u0000-\u001f]/g, "_")
         .replace(/\s+/g, " ")
         .trim()
+        .replace(/[. ]+$/, "")
         .slice(0, config.limits.maxFilenameLength) || "image";
     }
 

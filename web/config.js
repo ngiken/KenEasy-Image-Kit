@@ -3,7 +3,7 @@
   "use strict";
 
   var config = {
-    version: "0.3.3",
+    version: "0.3.4",
     storageKeys: {
       language: "keneasy-imagekit-lang",
       appearance: "keneasy-imagekit-appearance",
@@ -75,6 +75,18 @@
         nameKey: "presetSocial",
         descKey: "presetSocialDesc",
         values: { format: "image/webp", quality: 0.82, maxEdge: 1080 },
+      },
+      {
+        id: "thumbnail",
+        nameKey: "presetThumbnail",
+        descKey: "presetThumbnailDesc",
+        values: { format: "image/webp", quality: 0.75, maxEdge: 320 },
+      },
+      {
+        id: "uhd",
+        nameKey: "presetUhd",
+        descKey: "presetUhdDesc",
+        values: { format: "image/webp", quality: 0.90, maxEdge: 3840 },
       },
     ],
   };

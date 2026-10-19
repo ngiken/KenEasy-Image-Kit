@@ -840,9 +840,10 @@ svg {
 .panel-heading,
 .list-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
 }
 
 .panel-heading h2,
@@ -1256,6 +1257,12 @@ input[type="range"]:focus-visible::-webkit-slider-thumb {
 
 .zip-name-field {
   margin-top: 18px;
+}
+
+.list-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .list-panel {

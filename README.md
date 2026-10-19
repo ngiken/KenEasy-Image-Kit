@@ -23,9 +23,9 @@
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%BF%E7%94%A8-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.4-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.5-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
-<img alt="Tests" src="https://img.shields.io/badge/e2e-56%2F56-27c499?style=for-the-badge">
+<img alt="Tests" src="https://img.shields.io/badge/e2e-59%2F59-27c499?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
@@ -183,6 +183,17 @@ npm run capture:readme
 ---
 
 ## 更新说明
+
+### v0.3.5
+- 新增剪贴板直接粘贴（`Ctrl+V`）导入功能：截图或网页复制图片按 `Ctrl+V` 即可无缝加入队列，省去先存本地再拖入的繁琐操作
+- 队列头部新增「倒序」一键快捷翻转按钮，大幅简化批量改名与顺序导出场景下的逆序翻转需求
+- 新增内置「头像与图标（Avatar & Icon · 128px）」预设，输出 128px 无损 PNG，方便快速制作应用图标与 Favicon
+- 优化移动端小屏幕布局自适应，确保多按钮操作在极端狭窄屏幕下零横向溢出
+- 自动化端到端测试拓展至 59 项，保持 100% 全绿全通
+
+### v0.3.4
+- 新增「缩略小图（320px）」与「超清 4K（3840px）」内置快捷预设
+- 脚本标签缓存清除标记与国际化字典同步更新
 
 ### v0.3.3
 - 优化输出文件名规范化规则，防范 Windows 平台下尾随空格、点号和 `.zip.zip` 重复后缀

@@ -337,6 +337,7 @@
     els.btnCount.hidden = count === 0;
     els.emptyState.hidden = count > 0;
     els.btnClear.disabled = count === 0 || busy;
+    if (els.btnReverse) els.btnReverse.disabled = count === 0 || busy;
     els.btnConvert.disabled = count === 0 || busy;
     els.dropzone.classList.toggle("has-files", count > 0);
     syncWorkflowState();
@@ -431,6 +432,14 @@
     renderList();
     hideStatus();
     toast(t("queueCleared"));
+  }
+
+  function reverseQueue() {
+    if (busy || !items.length) return;
+    items.reverse();
+    renderList();
+    resetResults();
+    toast(t("queueReversed"));
   }
 
   function moveItem(id, delta) {
@@ -810,6 +819,7 @@
       };
       if (themePreference.addEventListener) themePreference.addEventListener("change", followSystemTheme);
     }
+    if (els.btnReverse) els.btnReverse.addEventListener("click", reverseQueue);
     els.btnClear.addEventListener("click", clearAll);
     els.btnConvert.addEventListener("click", processAll);
     els.optFormat.addEventListener("change", handleOptionChange);
@@ -828,12 +838,45 @@
     });
   }
 
+  function wirePaste() {
+    window.addEventListener("paste", function (event) {
+      if (busy) return;
+      var active = document.activeElement;
+      var tag = active && active.tagName ? active.tagName.toLowerCase() : "";
+      if (tag === "input" || tag === "textarea" || (active && active.isContentEditable)) return;
+
+      var clipboardData = event.clipboardData;
+      if (!clipboardData) return;
+
+      var files = Array.from(clipboardData.files || []);
+      if (!files.length && clipboardData.items) {
+        for (var i = 0; i < clipboardData.items.length; i++) {
+          var item = clipboardData.items[i];
+          if (item.kind === "file" && item.type.indexOf("image/") === 0) {
+            var blob = item.getAsFile();
+            if (blob) {
+              var ts = new Date().toISOString().replace(/[:.]/g, "-").slice(11, 19);
+              var fileName = blob.name && blob.name !== "image.png" ? blob.name : "pasted-image-" + ts + ".png";
+              files.push(new File([blob], fileName, { type: blob.type }));
+            }
+          }
+        }
+      }
+
+      if (files.length) {
+        event.preventDefault();
+        addFiles(files);
+        toast(t("pastedFromClipboard"));
+      }
+    });
+  }
+
   function cacheElements() {
     [
       "main", "dropzone", "fileInput", "presetList", "optFormat", "optQuality", "qualityValue",
       "qualityField", "qualityHelp", "formatHelp", "optMaxEdge", "optZip", "optKeepName",
       "optFilename", "zipNameField", "fileList", "fileCount", "totalSize", "emptyState",
-      "btnClear", "btnConvert", "btnCount", "actionHint", "statusPanel", "statusText",
+      "btnReverse", "btnClear", "btnConvert", "btnCount", "actionHint", "statusPanel", "statusText",
       "statusPct", "statusDetail", "progressTrack", "progressBar", "langZh", "langEn", "themeToggle",
       "workflowSteps", "btnConvertLabel"
     ].forEach(function (id) { els[id] = $(id); });
@@ -854,6 +897,7 @@
     renderPresets();
     wireControls();
     wireDropzone();
+    wirePaste();
     syncControlPresentation();
     renderList();
   }

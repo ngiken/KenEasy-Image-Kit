@@ -23,9 +23,9 @@ Files are processed entirely in your browser: **no upload, no install, no signup
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/use%20online-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.4-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.5-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
-<img alt="Tests" src="https://img.shields.io/badge/e2e-56%2F56-27c499?style=for-the-badge">
+<img alt="Tests" src="https://img.shields.io/badge/e2e-59%2F59-27c499?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
@@ -183,6 +183,17 @@ npm run capture:readme
 ---
 
 ## Changelog
+
+### v0.3.5
+- **Direct Clipboard Paste (`Ctrl+V`)**: Seamlessly paste screenshots or copied images directly into the processing queue without having to save to disk first.
+- **Reverse Queue Button**: Added a one-click "Reverse" action to the queue header to instantly flip batch order, especially useful for sequential export and renaming.
+- **Avatar & Icon Preset**: Added built-in preset generating crisp 128px PNGs, ideal for profile avatars, favicons, and app icons.
+- **Mobile Responsive Polish**: Refined flex-wrap layout on narrow viewports (380px) ensuring zero horizontal overflow with multi-button toolbars.
+- **Expanded E2E Regression Suite**: Extended real-browser verification suite to 59/59 passing checks.
+
+### v0.3.4
+- **Thumbnail & Ultra HD 4K Presets**: Added built-in presets for web thumbnails (320px) and ultra HD archiving (3840px).
+- **Asset Versioning**: Synchronized cache busters and bilingual i18n dictionaries.
 
 ### v0.3.3
 - Optimized filename sanitization against Windows trailing dots/spaces and repeated `.zip.zip` extensions.

@@ -3,7 +3,7 @@
   "use strict";
 
   var config = {
-    version: "0.3.4",
+    version: "0.3.5",
     storageKeys: {
       language: "keneasy-imagekit-lang",
       appearance: "keneasy-imagekit-appearance",
@@ -87,6 +87,12 @@
         nameKey: "presetUhd",
         descKey: "presetUhdDesc",
         values: { format: "image/webp", quality: 0.90, maxEdge: 3840 },
+      },
+      {
+        id: "avatar",
+        nameKey: "presetAvatar",
+        descKey: "presetAvatarDesc",
+        values: { format: "image/png", quality: 0.92, maxEdge: 128 },
       },
     ],
   };

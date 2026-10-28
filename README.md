@@ -23,9 +23,9 @@
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%BF%E7%94%A8-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.5-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.6-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
-<img alt="Tests" src="https://img.shields.io/badge/e2e-59%2F59-27c499?style=for-the-badge">
+<img alt="Tests" src="https://img.shields.io/badge/e2e-60%2F60-27c499?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
@@ -183,6 +183,11 @@ npm run capture:readme
 ---
 
 ## 更新说明
+
+### v0.3.6
+- 队列头部新增「正序」一键快捷排序按钮，按文件名自然拼读（A-Z）原地重排队列，解决批量拾取图片乱序痛点
+- 新增内置「2K 高清（2560px）」快捷预设，输出 88% 画质 WebP，专为 2K 高清壁纸、大幅横幅与展示大图优化
+- 自动化端到端测试拓展至 60 项，保持 100% 全绿全通
 
 ### v0.3.5
 - 新增剪贴板直接粘贴（`Ctrl+V`）导入功能：截图或网页复制图片按 `Ctrl+V` 即可无缝加入队列，省去先存本地再拖入的繁琐操作

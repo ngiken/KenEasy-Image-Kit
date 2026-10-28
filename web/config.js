@@ -3,7 +3,7 @@
   "use strict";
 
   var config = {
-    version: "0.3.5",
+    version: "0.3.6",
     storageKeys: {
       language: "keneasy-imagekit-lang",
       appearance: "keneasy-imagekit-appearance",
@@ -81,6 +81,12 @@
         nameKey: "presetThumbnail",
         descKey: "presetThumbnailDesc",
         values: { format: "image/webp", quality: 0.75, maxEdge: 320 },
+      },
+      {
+        id: "qhd",
+        nameKey: "presetQhd",
+        descKey: "presetQhdDesc",
+        values: { format: "image/webp", quality: 0.88, maxEdge: 2560 },
       },
       {
         id: "uhd",

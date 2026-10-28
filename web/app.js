@@ -337,6 +337,7 @@
     els.btnCount.hidden = count === 0;
     els.emptyState.hidden = count > 0;
     els.btnClear.disabled = count === 0 || busy;
+    if (els.btnSortName) els.btnSortName.disabled = count === 0 || busy;
     if (els.btnReverse) els.btnReverse.disabled = count === 0 || busy;
     els.btnConvert.disabled = count === 0 || busy;
     els.dropzone.classList.toggle("has-files", count > 0);
@@ -440,6 +441,18 @@
     renderList();
     resetResults();
     toast(t("queueReversed"));
+  }
+
+  function sortQueueByName() {
+    if (busy || !items.length) return;
+    items.sort(function (a, b) {
+      var nameA = (a.file && a.file.name) || "";
+      var nameB = (b.file && b.file.name) || "";
+      return nameA.localeCompare(nameB, undefined, { numeric: true, sensitivity: "base" });
+    });
+    renderList();
+    resetResults();
+    toast(t("queueSortedName"));
   }
 
   function moveItem(id, delta) {
@@ -819,6 +832,7 @@
       };
       if (themePreference.addEventListener) themePreference.addEventListener("change", followSystemTheme);
     }
+    if (els.btnSortName) els.btnSortName.addEventListener("click", sortQueueByName);
     if (els.btnReverse) els.btnReverse.addEventListener("click", reverseQueue);
     els.btnClear.addEventListener("click", clearAll);
     els.btnConvert.addEventListener("click", processAll);
@@ -876,7 +890,7 @@
       "main", "dropzone", "fileInput", "presetList", "optFormat", "optQuality", "qualityValue",
       "qualityField", "qualityHelp", "formatHelp", "optMaxEdge", "optZip", "optKeepName",
       "optFilename", "zipNameField", "fileList", "fileCount", "totalSize", "emptyState",
-      "btnReverse", "btnClear", "btnConvert", "btnCount", "actionHint", "statusPanel", "statusText",
+      "btnSortName", "btnReverse", "btnClear", "btnConvert", "btnCount", "actionHint", "statusPanel", "statusText",
       "statusPct", "statusDetail", "progressTrack", "progressBar", "langZh", "langEn", "themeToggle",
       "workflowSteps", "btnConvertLabel"
     ].forEach(function (id) { els[id] = $(id); });

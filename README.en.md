@@ -23,9 +23,9 @@ Files are processed entirely in your browser: **no upload, no install, no signup
 <br/>
 
 <img alt="Use online" src="https://img.shields.io/badge/use%20online-ngiken.github.io-fb7299?style=for-the-badge">
-<img alt="Version" src="https://img.shields.io/badge/version-0.3.5-0071e3?style=for-the-badge">
+<img alt="Version" src="https://img.shields.io/badge/version-0.3.6-0071e3?style=for-the-badge">
 <img alt="Privacy" src="https://img.shields.io/badge/privacy-local%20only-00aeec?style=for-the-badge">
-<img alt="Tests" src="https://img.shields.io/badge/e2e-59%2F59-27c499?style=for-the-badge">
+<img alt="Tests" src="https://img.shields.io/badge/e2e-60%2F60-27c499?style=for-the-badge">
 <img alt="License" src="https://img.shields.io/badge/license-MIT-9aa4b2?style=for-the-badge">
 
 <br/><br/>
@@ -183,6 +183,11 @@ npm run capture:readme
 ---
 
 ## Changelog
+
+### v0.3.6
+- **Queue Sort A-Z (Natural Alphanumeric)**: Added a one-click "A-Z" button to the queue header to instantly arrange files in natural alphabetic order, resolving out-of-order image picker batches.
+- **2K QHD Preset (2560px)**: Added built-in preset generating 88% quality WebP images, ideal for 2K displays, hero banners, and photography showcases.
+- **Expanded E2E Regression Suite**: Extended real-browser verification suite to 60/60 passing checks (100% green).
 
 ### v0.3.5
 - **Direct Clipboard Paste (`Ctrl+V`)**: Seamlessly paste screenshots or copied images directly into the processing queue without having to save to disk first.
